@@ -19,9 +19,8 @@ exports.initializeAnalytics = async () => {
         if (analytics[organizer._id] === undefined) {
             analytics[organizer._id] = { events: [], totalParticipants: 0, totalVolunteers: 0 };
         }
-
-        analytics[organizer._id].events.push({ eventName: event.name, numParticipants: event.registered_participants.length, numVolunteers: event.volunteers.length });
-        analytics[organizer._id].totalParticipants += event.registered_participants.length;
+        analytics[organizer._id].events.push({ eventName: event.name, numParticipants: event.registeredParticipants.length, numVolunteers: event.volunteers.length });
+        analytics[organizer._id].totalParticipants += event.registeredParticipants.length;
         analytics[organizer._id].totalVolunteers += event.volunteers.length;
     }
     console.log(analytics);
