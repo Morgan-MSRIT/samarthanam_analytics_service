@@ -1,8 +1,11 @@
 const Event = require("../models/event.models.js");
 const { getAnalyticsForOrganizer, putAnalyticsForOrganizer } = require("../utils/cache.js");
 
+const options = { fullDocument: "updateLookup" };
+const pipeline = [];
+
 exports.watchEvents = () => {
-    Event.watch().on("change", async next => {
+    Event.watch(pipeline, options).on("change", async next => {
         switch (next.operationType) {
             case "insert":
             case "update":
