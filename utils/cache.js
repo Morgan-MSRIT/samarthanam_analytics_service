@@ -17,9 +17,12 @@ exports.initializeAnalytics = async () => {
     for (const event of events) {
         const organizer = await User.findOne({ _id: event.user });
         if (analytics[organizer._id] === undefined) {
-            analytics[organizer._id] = { events: [], totalParticipants: 0, totalVolunteers: 0 };
+            analytics[organizer._id] = { events: [], eventName:[], numParticipants: [], registeredParticipants: [], totalParticipants: 0, totalVolunteers: 0 };
         }
         analytics[organizer._id].events.push({ eventName: event.name, numParticipants: event.registeredParticipants.length, numVolunteers: event.volunteers.length });
+        analytics[organizer._id].eventName.push(event.name);
+        analytics[organizer._id].numParticipants.push(event.registeredParticipants.length);
+        analytics[organizer._id].registeredParticipants.push(event.volunteers.length);
         analytics[organizer._id].totalParticipants += event.registeredParticipants.length;
         analytics[organizer._id].totalVolunteers += event.volunteers.length;
     }
@@ -32,8 +35,7 @@ exports.getAnalyticsForOrganizer = organizer => {
 
 exports.putAnalyticsForOrganizer = (organizer, analysis) => {
     analytics[organizer._id] = analysis;
-    console.log("Updated analytics for organizer.")
-    console.log(analytics);
+    return analytics[organizer._id];
 }
 
 exports.getAnalytics = () => {

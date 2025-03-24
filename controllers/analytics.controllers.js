@@ -3,9 +3,8 @@ const { getAnalyticsForOrganizer, getAnalytics } = require("../utils/cache");
 
 exports.getOrganizerAnalytics = async (req, res) => {
     try {
-        const name  = req.body.organizerName;
-        const email = req.body.organizerEmail;
-        const organizer = await User.find({ name: name, email: email })
+        const id = req.body.id;
+        const organizer = await User.findById(id)
         const analysis = getAnalyticsForOrganizer(organizer);
         if (analysis === null) {
             return res.status(400).json({
@@ -16,7 +15,7 @@ exports.getOrganizerAnalytics = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Analysis found for organizer",
-            analytics: analysis,
+            data: analysis,
         });
     } catch (err) {
         console.log(err.message);
@@ -33,7 +32,7 @@ exports.getAllAnalytics = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Analysis found for organizer",
-            analytics: analytics,
+            data: analytics,
         });
     } catch (err) {
         console.log(err.message);
