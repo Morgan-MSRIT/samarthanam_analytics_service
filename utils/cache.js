@@ -96,13 +96,13 @@ exports.putEventAnalyticsForOrganizer = (organizer, analysis) => {
 
 exports.getEventAnalytics = () => {
     const analytics = { events: [], eventName: [], numParticipants: [], registeredParticipants: [], totalParticipants: 0, totalVolunteers: 0 };
-    for (const organizerAnalytics in eventAnalytics) {
-        analytics.events.push(organizerAnalytics.events)
-        analytics.eventName.push(organizerAnalytics.eventName);
-        analytics.numParticipants.push(organizerAnalytics.numParticipants);
-        analytics.registeredParticipants.push(organizerAnalytics.registeredParticipants);
-        analytics.totalParticipants += organizerAnalytics.totalParticipants;
-        analytics.totalVolunteers += organizerAnalytics.totalVolunteers;
+    for (const organizerId in eventAnalytics) {
+        analytics.events.push(eventAnalytics[organizerId].events)
+        analytics.eventName.push(eventAnalytics[organizerId].eventName);
+        analytics.numParticipants.push(eventAnalytics[organizerId].numParticipants);
+        analytics.registeredParticipants.push(eventAnalytics[organizerId].registeredParticipants);
+        analytics.totalParticipants += eventAnalytics[organizerId].totalParticipants;
+        analytics.totalVolunteers += eventAnalytics[organizerId].totalVolunteers;
     }
 
     return analytics;
