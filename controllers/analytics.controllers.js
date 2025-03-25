@@ -1,4 +1,5 @@
 const User = require("../models/user.models.js");
+const Tag = require("../models/tag.models.js");
 const { getEventAnalyticsForOrganizer, getEventAnalytics, getTagAnalytics } = require("../utils/cache");
 
 exports.getOrganizerAnalytics = async (req, res) => {
@@ -19,7 +20,8 @@ exports.getOrganizerAnalytics = async (req, res) => {
 
         const tagAnalytics = getTagAnalytics();
         for (const tag in tagAnalytics) {
-            eventAnalysis.tags.push(tag.name);
+            const tagSchema = await Tag.find({ _id: tag });
+            eventAnalysis.tags.push(tagSchema.name);
             eventAnalysis.totalVolunteersWithTag.push(tagAnalytics[tag].totalVolunteersWithTag);
             eventAnalysis.registeredVolunteersWithTag.push(tagAnalytics[tag].registeredVolunteersWithTag);
         }
