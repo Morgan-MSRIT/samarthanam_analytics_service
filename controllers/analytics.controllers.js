@@ -20,7 +20,8 @@ exports.getOrganizerAnalytics = async (req, res) => {
 
         const tagAnalytics = getTagAnalytics();
         for (const tag in tagAnalytics) {
-            const tagSchema = await Tag.find({ _id: tag });
+            const tagSchema = await Tag.findOne({ _id: tag });
+            console.log(tagSchema);
             eventAnalysis.tags.push(tagSchema.name);
             eventAnalysis.totalVolunteersWithTag.push(tagAnalytics[tag].totalVolunteersWithTag);
             eventAnalysis.registeredVolunteersWithTag.push(tagAnalytics[tag].registeredVolunteersWithTag);
