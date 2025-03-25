@@ -95,5 +95,15 @@ exports.putEventAnalyticsForOrganizer = (organizer, analysis) => {
 }
 
 exports.getEventAnalytics = () => {
-    return eventAnalytics;
+    const analytics = { events: [], eventName: [], numParticipants: [], registeredParticipants: [], totalParticipants: 0, totalVolunteers: 0 };
+    for (const organizerAnalytics in eventAnalytics) {
+        analytics.events.push(organizerAnalytics.events)
+        analytics.eventName.push(organizerAnalytics.eventName);
+        analytics.numParticipants.push(organizerAnalytics.numParticipants);
+        analytics.registeredParticipants.push(organizerAnalytics.registeredParticipants);
+        analytics.totalParticipants += organizerAnalytics.totalParticipants;
+        analytics.totalVolunteers += organizerAnalytics.totalVolunteers;
+    }
+
+    return analytics;
 }
