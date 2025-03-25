@@ -9,6 +9,8 @@ const dotenv=require("dotenv");
 const { analyticsRouter } = require("./routes/analytics.routes");
 const { watchEvents } = require("./ws/eventWatcher");
 const { initializeAnalytics } = require("./utils/cache");
+const { watchTags } = require("./ws/tagWatcher");
+const { watchVolunteers } = require("./ws/volunteerWatcher");
 
 dotenv.config();
 
@@ -51,6 +53,8 @@ app.listen(PORT,async ()=>{
     await initializeAnalytics();
     console.log(`App is running at ${PORT}`)
     watchEvents();
+    watchTags();
+    watchVolunteers();
 })
 
 
