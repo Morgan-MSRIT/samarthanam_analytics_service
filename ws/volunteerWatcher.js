@@ -11,7 +11,7 @@ exports.watchVolunteers = () => {
         switch (next.operationType) {
             case "insert":
             case "update":
-                const volunteer = next.fullDocument.populate("event", "user");
+                const volunteer = await Volunteer.findOne({ _id: next.fullDocument._id }).populate("event", "user");
                 const tags = await Tag.find();
                 for (const tag of tags) {
                     const analytics = getTagAnalyticsForTag(tag);
