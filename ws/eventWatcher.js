@@ -13,12 +13,12 @@ exports.watchEvents = () => {
                 const organizer = event.user;
                 const analysis = getEventAnalyticsForOrganizer(organizer);
                 if (analysis === null) {
-                    analysis = { events: [], totalParticipants: 0, totalVolunteers: 0, eventName: [], numParticipants: [], registeredParticipants: [], tagName: [], totalVolunteersWithTag: [], registeredVolunteersWithTag: [] };
+                    analysis = { totalParticipants: 0, totalVolunteers: 0, eventName: [], volunteersRequired: [], volunteersRegistered: [] };
                 }
-                analysis.events.push({ eventName: event.name, numParticipants: event.registeredParticipants.length, numVolunteers: event.volunteers.length });
                 analysis.eventName.push(event.name);
-                analysis.numParticipants.push(event.registeredParticipants.length);
-                analysis.registeredParticipants.push(event.volunteers.length);
+                analysis.maxVolunteers.push(event.registeredParticipants.length);
+                analysis.volunteersRegistered.push(event.volunteers.length);
+                analysis.volunteersRequired.push(event.totalVolunteerReq);
                 analysis.totalParticipants += event.registeredParticipants.length;
                 analysis.totalVolunteers += event.volunteers.length;
 

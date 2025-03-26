@@ -72,17 +72,16 @@ exports.initializeAnalytics = async () => {
     for (const event of events) {
         const organizer = await User.findOne({ _id: event.user });
         if (eventAnalytics[organizer._id] === undefined) {
-            eventAnalytics[organizer._id] = { events: [], eventName:[], numParticipants: [], registeredParticipants: [], totalParticipants: 0, totalVolunteers: 0 };
+            eventAnalytics[organizer._id] = { eventName: [], volunteersRequired: [], volunteersRegistered: [], totalParticipants: 0, totalVolunteers: 0 };
         }
-        eventAnalytics[organizer._id].events.push({ eventName: event.name, numParticipants: event.registeredParticipants.length, numVolunteers: event.volunteers.length });
         eventAnalytics[organizer._id].eventName.push(event.name);
-        eventAnalytics[organizer._id].numParticipants.push(event.registeredParticipants.length);
-        eventAnalytics[organizer._id].registeredParticipants.push(event.volunteers.length);
+        eventAnalytics[organizer._id].volunteersRequired.push(event.totalVolunteerReq);
+        eventAnalytics[organizer._id].volunteersRegistered.push(event.volunteers.length);
         eventAnalytics[organizer._id].totalParticipants += event.registeredParticipants.length;
         eventAnalytics[organizer._id].totalVolunteers += event.volunteers.length;
     }
     initializeTagAnalytics();
-    // console.log(eventAnalytics);
+    console.log(eventAnalytics);
 }
 
 exports.getEventAnalyticsForOrganizer = organizer => {
@@ -91,19 +90,19 @@ exports.getEventAnalyticsForOrganizer = organizer => {
 
 exports.putEventAnalyticsForOrganizer = (organizer, analysis) => {
     eventAnalytics[organizer._id] = analysis;
+    console.log("New analytics for organizer:");
+    console.log(eventAnalytics);
     return eventAnalytics[organizer._id];
 }
 
 exports.getEventAnalytics = () => {
-    const analytics = { events: [], eventName: [], numParticipants: [], registeredParticipants: [], totalParticipants: 0, totalVolunteers: 0 };
+    const analytics = { eventName: [], volunteersRequired: [], volunteersRegistered: [], totalParticipants: 0, totalVolunteers: 0 };
     for (const organizerId in eventAnalytics) {
-        analytics.events.push(...eventAnalytics[organizerId].events)
         analytics.eventName.push(...eventAnalytics[organizerId].eventName);
-        analytics.numParticipants.push(...eventAnalytics[organizerId].numParticipants);
-        analytics.registeredParticipants.push(...eventAnalytics[organizerId].registeredParticipants);
+        analytics.volunteersRequired.push(...eventAnalytics[organizerId].volunteersRequired);
+        analytics.volunteersRequired.push(...eventAnalytics[organizerId].volunteersRegistered);
         analytics.totalParticipants += eventAnalytics[organizerId].totalParticipants;
         analytics.totalVolunteers += eventAnalytics[organizerId].totalVolunteers;
     }
-
     return analytics;
 }
