@@ -1,5 +1,5 @@
 const Event = require("../models/event.models.js");
-const { getAnalyticsForOrganizer, putAnalyticsForOrganizer } = require("../utils/cache.js");
+const { putEventAnalyticsForOrganizer, getEventAnalyticsForOrganizer } = require("../utils/cache.js");
 
 const options = { fullDocument: "updateLookup" };
 const pipeline = [];
@@ -11,7 +11,7 @@ exports.watchEvents = () => {
             case "update":
                 const event = next.fullDocument;
                 const organizer = event.user;
-                const analysis = getAnalyticsForOrganizer(organizer);
+                const analysis = getEventAnalyticsForOrganizer(organizer);
                 if (analysis === null) {
                     analysis = { events: [], totalParticipants: 0, totalVolunteers: 0, eventName: [], numParticipants: [], registeredParticipants: [], tagName: [], totalVolunteersWithTag: [], registeredVolunteersWithTag: [] };
                 }
@@ -22,7 +22,7 @@ exports.watchEvents = () => {
                 analysis.totalParticipants += event.registeredParticipants.length;
                 analysis.totalVolunteers += event.volunteers.length;
 
-                putAnalyticsForOrganizer(organizer, analysis);
+                putEventAnalyticsForOrganizer(organizer, analysis);
                 break;
         }
     });
