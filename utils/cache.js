@@ -100,7 +100,7 @@ exports.getEventAnalytics = () => {
     for (const organizerId in eventAnalytics) {
         analytics.eventName.push(...eventAnalytics[organizerId].eventName);
         analytics.volunteersRequired.push(...eventAnalytics[organizerId].volunteersRequired);
-        analytics.volunteersRequired.push(...eventAnalytics[organizerId].volunteersRegistered);
+        analytics.volunteersRegistered.push(...eventAnalytics[organizerId].volunteersRegistered);
         analytics.totalParticipants += eventAnalytics[organizerId].totalParticipants;
         analytics.totalVolunteers += eventAnalytics[organizerId].totalVolunteers;
     }
