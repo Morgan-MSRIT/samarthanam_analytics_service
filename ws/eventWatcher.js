@@ -16,7 +16,6 @@ exports.watchEvents = () => {
                     analysis = { totalParticipants: 0, totalVolunteers: 0, eventName: [], volunteersRequired: [], volunteersRegistered: [] };
                 }
                 analysis.eventName.push(event.name);
-                analysis.maxVolunteers.push(event.registeredParticipants.length);
                 analysis.volunteersRegistered.push(event.volunteers.length);
                 analysis.volunteersRequired.push(event.totalVolunteerReq);
                 analysis.totalParticipants += event.registeredParticipants.length;

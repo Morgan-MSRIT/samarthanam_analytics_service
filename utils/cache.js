@@ -63,6 +63,10 @@ exports.putTagAnalyticsForTag = (tag, analytics) => {
     console.log(tagAnalytics);
 }
 
+exports.getTagAnalyticsForTag = (tag) => {
+    return tagAnalytics[tag._id];
+}
+
 exports.getTagAnalytics = () => {
     return tagAnalytics;
 }
